@@ -31,6 +31,7 @@ registerErrorRouter()
 registerExtendRouter()
 registerInterceptorRouter()
 registerConfigRouter()
+registerCancelRouter()
 
 app.use(router)
 
@@ -130,7 +131,14 @@ function registerConfigRouter() {
   router.post('/config/post', function(req, res) {
     res.json(req.body)
   })
-  
+}
+function registerCancelRouter() {
+  router.get('/cancel/get', function(req, res) {
+    res.end('/cancel/get')
+  })
+  router.post('/cancel/post', function(req, res) {
+    res.json(req.body)
+  })
 }
 
 module.exports = app.listen(port, () => {
