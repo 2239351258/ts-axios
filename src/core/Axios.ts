@@ -48,20 +48,20 @@ export default class Axios {
       config = url
     }
     config = mergeConfig(this.defaults, config)
+
+    // 拦截器的实现
     const chain: PromiseChain<any>[] = [
       {
         resolved: dispatchRequest,
         rejected: undefined
       }
     ]
-
     this.interceptors.request.forEach(interceptor => {
       chain.unshift(interceptor)
     })
     this.interceptors.response.forEach(interceptor => {
       chain.push(interceptor)
     })
-
     let promise = Promise.resolve(config)
     while (chain.length) {
       const { resolved, rejected } = chain.shift()!
