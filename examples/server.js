@@ -23,6 +23,12 @@ app.use(webpackDevMiddleware(compiler, {
 app.use(webpackHotMiddleware(compiler))
 
 app.use(express.static(__dirname))
+app.use(
+  function setHeaders(req,res,next) {
+    res.cookie('CSRF-TOKEN-D', '1234abc')
+    next()
+  }
+)
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
