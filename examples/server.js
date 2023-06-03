@@ -1,9 +1,13 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const webpack = require('webpack')
+const cookieParser = require('cookie-parser')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
 const WebpackConfig = require('./webpack.config')
+
+// 启动另一个服务器
+require('./sever2')
 
 const app = express()
 const compiler = webpack(WebpackConfig)
@@ -22,6 +26,7 @@ app.use(express.static(__dirname))
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(cookieParser())
 
 const router = express.Router()
 
@@ -32,6 +37,7 @@ registerExtendRouter()
 registerInterceptorRouter()
 registerConfigRouter()
 registerCancelRouter()
+registerMoreRouter() 
 
 app.use(router)
 
@@ -138,6 +144,11 @@ function registerCancelRouter() {
   })
   router.post('/cancel/post', function(req, res) {
     res.json(req.body)
+  })
+}
+function registerMoreRouter() {
+  router.get('/more/get', function (req, res) {
+    res.json(req.cookies)
   })
 }
 
