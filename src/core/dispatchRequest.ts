@@ -23,8 +23,8 @@ function processConfig(config: AxiosRequestConfig): void {
 }
 // 格式化url
 function transformURL(config: AxiosRequestConfig): string {
-  const { url, params } = config
-  return buildURL(url!, params)
+  const { url, params, paramsSerializer } = config
+  return buildURL(url!, params, paramsSerializer)
 }
 
 // // 序列化data
